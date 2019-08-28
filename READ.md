@@ -1,9 +1,17 @@
 
-长短token，短用于资源接口请求，长用于请求刷新token方案。
+## token刷新方案
+登录后服务端返回两个token（请求资源token，刷新token。前者时间短，比如1天，后者时间长，7天）。
+资源token 用于资源接口请求，刷新token 用于请求刷新token。实现首次登录后免登，和token刷新机制。
+
+## token命名方式
 - token（用于一般的资源请求）
 - refreshToken（用于请求刷新token，返回两个新的token（短和长））
 
-测试步骤：
+## 项目介绍
+本项目是使用 go mod 方式，因此需要设置好对应的环境变量和代理。设置好后，在项目根目录直接 go build 。
+
+## 测试步骤：
+- 0、配置好自己的ip，port和mysql等参数（config.yaml）
 - 1、创建数据库和建表（使用create.sql脚本。在于script目录）
 - 2、测试时修改config.yaml的两个时间（shortTime 和 longTime），比如短的10s，长的30s。
 - 3、调用 register 接口注册账号
@@ -12,6 +20,8 @@
 - 6、等待 shortTime 后，token失效，使用 refreshtoken 接口再次得到 token 和 refreshToken 。
 - 7、若 refreshToken过期失效，再次调用login 接口登录得到 token 和 refreshToken 。
 
+## 调用逻辑
+### 注册账号 
 [POST] ```http://172.16.0.66:8099/v1/user/register```
 
 请求：
@@ -31,6 +41,7 @@
         }
     }
 
+### 登录
 [POST] ```http://172.16.0.66:8099/v1/user/login```
 
 请求：
@@ -51,9 +62,10 @@
         }
     }
 
+### 评论服务
 [POST] ```http://172.16.0.66:8099/v1/service/comment```
 
-headers Authorization ：Bearer token
+```headers Authorization ：Bearer token```
 
 请求：
 
@@ -72,10 +84,10 @@ headers Authorization ：Bearer token
         "data": null
     }
 
-
+### 刷新过期token 
 [POST] ```http://172.16.0.66:8099/v1/base/refreshtoken```
 
-headers Authorization ：Bearer refreshToken
+```headers Authorization ：Bearer refreshToken```
 
 请求：
 

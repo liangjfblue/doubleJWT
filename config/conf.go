@@ -12,7 +12,6 @@ import (
 type ServerConfig struct {
     HTTPConf	*HTTPConfig
     MysqlConf	*MysqlConfig
-    RedisConf	*RedisConfig
 }
 
 // HTTPConfig http config
@@ -30,14 +29,6 @@ type MysqlConfig struct {
     Password	string
 }
 
-// RedisConfig redis config
-type RedisConfig struct {
-    Host 			string
-    Port			string
-    ClusterHost 	string
-    IsCluster		bool
-}
-
 // NewServerConf 实例化server config
 func NewServerConf() *ServerConfig {
     return &ServerConfig{
@@ -51,10 +42,6 @@ func NewServerConf() *ServerConfig {
             Db:			viper.GetString("mysql.db"),
             User:		viper.GetString("mysql.user"),
             Password:	viper.GetString("mysql.password"),
-        },
-        RedisConf: &RedisConfig{
-            Host:			viper.GetString("redis.host"),
-            Port:			viper.GetString("redis.port"),
         },
     }
 }

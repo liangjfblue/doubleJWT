@@ -18,8 +18,4 @@ mysql:
   user: root
   password: qwe123
 
-redis:
-  host: 192.168.1.199
-  port: 6379
-
 
