@@ -1,0 +1,25 @@
+runmode: debug            # 开发模式, debug, release, test
+addr: :8099
+name: doubleJWT
+
+jwt_secret:
+  short: test132heii
+  shortTime: 3600
+  long: test13he5e1
+  longTime: 86400
+
+log:
+  level: 5
+  reportCaller: true
+
+mysql:
+  addr: 172.16.0.68:3306
+  db: db_doublejwt
+  user: root
+  password: qwe123
+
+redis:
+  host: 192.168.1.199
+  port: 6379
+
+
